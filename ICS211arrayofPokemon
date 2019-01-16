@@ -1,0 +1,189 @@
+import java.util.*;
+/*
+*Array of Pokemon A.2
+*@author Nicholas Miyamoto-Pennywell
+*@since 9/16/17
+*/
+
+public class PokeArray{
+   static final int SIZE = 6;
+   
+   public static void main(String[] args){
+      Pokemon [] pokemonArray = new Pokemon[SIZE];//Pokemon Array
+      Scanner userIn = new Scanner(System.in);
+      String inString = new String("");
+      boolean endLoop = false;
+      int count = 0;
+      
+      //loop until stopping condition is given
+      while(endLoop != true){//Menu
+         //menu text
+         System.out.println("Please enter the number of your choice:");
+         System.out.println("1. Add a Pokemon");
+         System.out.println("2. Print all Pokemon");
+         System.out.println("0. Exit the program");
+         System.out.print("What would you like to do? ");
+         
+         //read in from user as a String -- much less errors can happen!
+         inString = userIn.nextLine();
+         
+         //take off any spaces on the string
+         inString = inString.trim();
+         
+         //just switch on the String no need to convert to int
+         switch(inString){
+            case "0": endLoop = true;
+               System.out.println("Good bye!");
+               break;
+            case "1": //do stuff to make a new Pokemon         
+               System.out.println("\nMake your new Pokemon.\n");
+               System.out.println("Pokemon " + (count + 1) + ":");
+               pokemonArray[count] = PokeArray.makePokemon();//Calls makePokemon Method
+                  count++;
+               System.out.println("\nPokemon Added\n");
+                  //Array management
+               if(count == SIZE){
+                  System.out.println(" |Pokemon List Full| ");
+                  System.out.println("New Pokemon entries will replace old ones.");
+                  count = 0;
+               }
+               break;
+            case "2": //print out all the Pokemon
+               System.out.println("\n****Printing user created Pokemon.****\n");
+               PokeArray.printArray(pokemonArray);//Calls printArray
+               break;
+            default: //not a valid menu entry
+               System.out.println("\n****Invalid menu choice.****\nPlease enter a 0, 1, or 2\n");
+               break;        
+         }
+      }//Menu
+   }//Main
+      
+   public static Pokemon makePokemon(){
+      String q1 = "What is the Pokemon's species?";
+      String q2 = "Does the Pokemon have a name? Y/N";
+      String q2B = "What is the Pokemon's name?";
+      String q3 = "What is the Pokemon's Pokedex number?";
+      String q4 = "What is the Pokemon's type?";
+      String q5 = "Does the pokemon have a second type? Y/N";
+      String q5B = "What is the Pokemon's second type?";
+      Scanner scan = new Scanner(System.in);
+      String userIn = "";
+      String uSpecies = "";
+      String uName = "";
+      String uNumber = "";
+      int userNum = 0;
+      String uType1 = "";
+      String uType2 = "";
+      boolean done = false;   
+      Pokemon poke;
+
+         //Species
+         while(uSpecies.length()==0){
+         System.out.println(q1);
+         uSpecies = scan.nextLine();
+         }//Guarantee Species.
+         while(!done){//Yes or No method. @author Marco Acierno
+            //Name
+            System.out.println(q2);
+            userIn = scan.nextLine();
+            switch(userIn){
+               case "Y":
+                  System.out.println(q2B);
+                  uName = scan.nextLine();
+                  done = true;
+                  break;
+               case "N":
+                  uName = uSpecies;
+                  done = true;
+                  break;
+               default:
+                  System.out.println("Please enter Y/N");
+                  boolean repeat = false;
+                        
+                  while(!repeat){
+                     userIn = scan.nextLine();
+                     switch(userIn){
+                        case "Y":
+                           System.out.println(q2B);
+                           uName = scan.nextLine();
+                           done = repeat = true;
+                           break;
+                        case "N":
+                           uName = uSpecies;
+                           done = repeat = true;
+                           break;
+                     }
+                  }
+                  break;
+            }           
+                     
+         }
+         done = false;
+         while(!done){
+            try{
+               //Number
+               System.out.println(q3);
+               uNumber = scan.nextLine();
+               userNum = Integer.parseInt(uNumber);
+               done = true;
+            }
+            catch(NumberFormatException nfe){
+               System.out.println("Invalid Pokedex Number");
+               System.out.println("Please Try again");
+            }
+         }
+         done = false;
+         while(uType1.length()==0){
+         //Type 1
+         System.out.println(q4);
+         uType1 = scan.nextLine();
+         }//Guarantee Type
+         //Type 2
+         while(!done){//Yes or No method. @author Marco Acierno
+            System.out.println(q5);
+            userIn = scan.nextLine();
+            switch(userIn){
+               case "Y":
+                  System.out.println(q5B);
+                  uType2 = scan.nextLine();
+                  done = true;
+                  break;
+               case "N":
+                  done = true;
+                  break;
+               default:
+                  System.out.println("Please enter Y/N");
+                  boolean repeat = false;
+                        
+                  while(!repeat){
+                     userIn = scan.nextLine();
+                     switch(userIn){
+                        case "Y":
+                           System.out.println(q5B);
+                           uType2 = scan.nextLine();
+                           done = repeat = true;
+                           break;
+                        case "N":
+                           done = repeat = true;
+                           break;
+                     }
+                  }
+                  break;
+            }           
+         }
+         poke = new Pokemon(uSpecies, uName, userNum, uType1, uType2);
+         return poke;   
+   }//makePokemon Method       
+         
+   public static void printArray(Pokemon [] displayArray){
+      int lengthOfArray = displayArray.length;
+      for(int l = 0; l < lengthOfArray; l++){
+         if(displayArray[l]!=null){
+            System.out.println("Pokemon " + (l+1) + ": \n" + displayArray[l]);
+               //Array prints all 6 pokemon objects including null objects
+         }
+      }
+   }//printArray Method
+
+}//Class
