@@ -1,0 +1,94 @@
+/*
+*PokeNode A.7
+*@author Nicholas Miyamoto-Pennywell
+*@since 11/25/17
+*/
+public class PokeNode {
+   private Pokemon pokemon;
+   private int caught;
+   private PokeNode left;
+   private PokeNode right;
+   
+   public PokeNode(Pokemon p, int numCaught, PokeNode lChild, PokeNode rChild) {
+      pokemon = p;
+      caught = numCaught;
+      left = lChild;
+      right = rChild;
+   }
+   /*
+   *getPokemon(returns the Pokemon in a given node)
+   */
+   public Pokemon getPokemon() {
+      return pokemon;
+   }
+   
+   /*
+   *getKey (Pokemon species number in a given node)
+   */
+   
+   public int getKey() {
+      return pokemon.getNumber();
+   }
+   /*
+   *getNumCaught (Number of Pokemon of similar species caught in a given node)
+   */
+   public int getNumCaught() {
+      return caught;
+   }
+   /*
+   *increaseNumCaught (increases the value of the numCaught in a given node)
+   */
+   public void increaseNumCaught() {
+      caught++;
+   }
+   /*
+   *decreaseNumCaught (decreases the value of the numCaught in a given node)
+   */
+   public void decreaseNumCaught() {
+      if (caught == 0) {
+         throw new PokeException("No Pokemon to Trade");
+      } else if (caught >= 1) {
+         caught--;
+      }
+   }
+   
+   
+	/**
+	 * Accessor method.
+	 * 
+	 * @return the left child's address
+	 */
+	public PokeNode getLChild() {
+		return left;
+	}
+
+	/**
+	 * Mutator method.
+	 * 
+	 * @param LChildParameter
+	 *            is the left child's address
+	 */
+	public void setLChild(PokeNode lChild) {
+		left = lChild;
+	}
+
+	/**
+	 * Accessor method.
+	 * 
+	 * @return the right child's address
+	 */
+	public PokeNode getRChild() {
+		return right;
+	}
+
+	/**
+	 * Mutator method.
+	 * 
+	 * @param RChildParameter
+	 *            is the right child's address
+	 */
+	public void setRChild(PokeNode rChild) {
+		right = rChild;
+	}
+
+} //Class
