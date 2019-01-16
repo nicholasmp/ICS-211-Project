@@ -1,0 +1,213 @@
+import java.util.*;
+/*
+*ArrayList of Pokemon Objects A.4
+*@author Nicholas Miyamoto-Pennywell
+*@since 10/21/17
+*/
+
+public class PokeArrayListOfObjects{
+   static final int SIZE = 6;
+   
+   public static void main(String[] args){
+      ArrayList<Pokemon> pokemonList= new ArrayList<>();//Pokemon ArrayLIST!!!! needs Change
+      Scanner userIn = new Scanner(System.in);
+      String inString = new String("");
+      boolean endLoop = false;
+      int count = 0;
+      /*Menu code Author @author Lisa Miller.
+      *menu code editor @editor Nicholas mp 
+      *loops until stopping condition is given
+      */
+      while(endLoop != true){//Menu
+         //menu text
+         System.out.println("Please enter the number of your choice:");
+         System.out.println("1. Add a Pokemon");
+         System.out.println("2. Print all Pokemon");
+         System.out.println("0. Exit the program");
+         System.out.print("What would you like to do? ");
+         
+         //read in from user as a String -- much less errors can happen!
+         inString = userIn.nextLine();
+         
+         //take off any spaces on the string
+         inString = inString.trim();
+         
+         //just switch on the String no need to convert to int
+         switch(inString){
+            case "0": endLoop = true;
+               System.out.println("Good bye!");
+               break;
+            case "1": //do stuff to make a new Pokemon         
+               System.out.println("\nMake your new Pokemon.\n");
+               System.out.println("Pokemon " + (count + 1) + ":");
+               if(pokemonList.size() == SIZE){//Array management replaces old Objects with new when limit reached.
+                  pokemonList.remove(count);
+               }
+               pokemonList.add(count, PokeArrayListOfObjects.makePokemon());//Calls makePokemon Method);
+                  count++;
+               System.out.println("\nPokemon Added\n");
+                  //Array management restarts array when size reached
+               if(count == SIZE){
+                  System.out.println(" |Pokemon List Full| ");
+                  System.out.println("New Pokemon entries will replace old ones.");
+                  count = 0;
+               }
+               break;
+            case "2": //print out all the Pokemon
+               System.out.println("\n****Printing user created Pokemon.****\n");
+               PokeArrayListOfObjects.printArray(pokemonList);//Calls printArray
+               break;
+            default: //not a valid menu entry
+               System.out.println("\n****Invalid menu choice.****\nPlease enter a 0, 1, or 2\n");
+               break;        
+         }
+      }//Menu
+   }//Main
+   
+   /*makePokemon Method
+   *Main calls method
+   *Method asks to make pokemon object then retruns it to Main.
+   */
+   public static Pokemon makePokemon(){
+      String q1 = "What is the Pokemon's species?";
+      String c1 = "Choose the Pokemon's Species by entering the number of the Pokemon:\n";
+      String q2 = "Does the Pokemon have a name? Y/N:";
+      String q3 = "What is the Pokemon's name?";
+      String pOptions = "Bulbasaur : 1 \nIvysaur : 2\nVenasuar : 3\nCharmander : 4\nCharmeleon : 5\nCharizard : 6\nSquirtle : 7\nWartortle : 8\nBlastoise : 9\n";
+      Scanner scan = new Scanner(System.in);
+      String userIn = "";
+      int userNum = 0;
+      String uName = "";
+      boolean done = false; 
+      boolean bName = false;  
+      
+      Pokemon p = null;
+      //Asking Pokemon Species
+      System.out.println(q1);
+      System.out.println(pOptions);
+      System.out.println(c1);
+      //Scanning User response, Checking results.
+      
+      //While loop until correct set of numbers is chosen.
+      while(!done){
+         userIn = scan.nextLine();
+         try{
+            userNum = Integer.parseInt(userIn);
+            if(userNum > 9){//Checks for numbers out of bounds (1-9)
+              System.out.println("Pokemon selected not in data base. Please try Again... \n");
+            }else{
+              done = true;
+            }
+         }catch(NumberFormatException nfe){//EXCEPTIONS, if string is used instead of numbers
+            System.out.println("Please try again");
+         }
+         
+      }
+      //Asking for Pokemon's Name.
+      done = false;
+      while(!done){//Loops for user input until either user inputs a name or says no.
+         System.out.println(q2);
+         try{
+            userIn = scan.nextLine();
+            switch(userIn){
+               case "Y":
+               case "y":
+                  System.out.println(q3);
+                  uName = scan.nextLine();
+                  if(uName.isEmpty()){
+                     done = false; 
+                  }else{
+                     bName = true;
+                     done = true;
+                  }
+                  break;
+               case "N":
+               case "n":
+                  done = true;
+                  break;
+               default:
+                  System.out.println("Invalid input");
+            } 
+         }catch(InputMismatchException ime){
+            System.out.println("Please try again.");
+         }
+      }//While loop for Name
+      
+      if(bName != true){//if else statement to check for Name input
+         switch(userNum){//switch statement for Pokemon Object without Name
+            case 1:
+               p = new Bulbasaur();
+               break;
+            case 2:
+               p = new Ivysaur();
+               break;
+            case 3:
+               p = new Venusaur();
+               break;
+            case 4:
+               p = new Charmander();
+               break;
+            case 5:
+               p = new Charmeleon();
+               break;
+            case 6:
+               p = new Charizard();
+               break;
+            case 7:
+               p = new Squirtle();
+               break;
+            case 8:
+               p = new Wartortle();
+               break;
+            case 9:
+               p =  new Blastoise ();
+               break;
+            default:
+         }
+      }else{
+         switch(userNum){//Switch statement for Pokemon Object with Name
+            case 1:
+               p = new Bulbasaur(uName);
+               break;
+            case 2:
+               p = new Ivysaur(uName);
+               break;
+            case 3:
+               p = new Venusaur(uName);
+               break;
+            case 4:
+               p = new Charmander(uName);
+               break;
+            case 5:
+               p = new Charmeleon(uName);
+               break;
+            case 6:
+               p = new Charizard(uName);
+               break;
+            case 7:
+               p = new Squirtle(uName);
+               break;
+            case 8:
+               p = new Wartortle(uName);
+               break;
+            case 9:
+               p =  new Blastoise (uName);
+               break;
+            default:
+         }
+      }
+      
+      return p;   
+   }//makePokemon Method 
+         
+   /*printArray method
+   *Prints the objgects stored in the Array List in order
+   */
+   public static void printArray(ArrayList <Pokemon> displayArrayList){
+      for(int l = 0; l < displayArrayList.size(); l++){
+            System.out.println("Pokemon " + (l+1) + ": \n" + displayArrayList.get(l));
+               //Array prints all 6 pokemon objects
+      }
+   }//printArray Method
+
+}//Class
